@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="js/function.js" defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+
+
+    <form action="view.html" method="get">
+        <div>
+            <input type='hidden' name='viewID' id='viewID' value='0001'>
+            <button>0001 閲覧</button>
+        </div>
+    </form>
+
+    <form action="view.html" method="get">
+        <div>
+            <input type='hidden' name='viewID' id='viewID' value='0002'>
+            <button>0002 閲覧</button>
+        </div>
+    </form>
+
+    <form action="view.html" method="get">
+        <div>
+            <input type='hidden' name='viewID' id='viewID' value='0003'>
+            <button>0003 閲覧</button>
+        </div>
+    </form>
+    <form action="view.html" method="get">
+        <div>
+            <input type='hidden' name='viewID' id='viewID' value='0004'>
+            <button>0004 閲覧</button>
+        </div>
+    </form>
+    <form action="view.html" method="get">
+        <div>
+            <input type='hidden' name='viewID' id='viewID' value='0005'>
+            <button>0005 閲覧</button>
+        </div>
+    </form>
+    <form action="view.html" method="get">
+        <div>
+            <input type='hidden' name='viewID' id='viewID' value='0006'>
+            <button>0006 閲覧</button>
+        </div>
+    </form>
+    <form action="view.html" method="get">
+        <div>
+            <input type='hidden' name='viewID' id='viewID' value='0007'>
+            <button>0007 閲覧</button>
+        </div>
+    </form>
+    <form action="view.html" method="get">
+        <div>
+            <input type='hidden' name='viewID' id='viewID' value='0008'>
+            <button>0008 閲覧</button>
+        </div>
+    </form>
+    <form action="view.html" method="get">
+        <div>
+            <input type='hidden' name='viewID' id='viewID' value='0009'>
+            <button>0009 閲覧</button>
+        </div>
+    </form>
+    <form action="view.html" method="get">
+        <div>
+            <input type='hidden' name='viewID' id='viewID' value='0010'>
+            <button>0010 閲覧</button>
+        </div>
+    </form>
+    <form action="view.html" method="get">
+        <div>
+            <input type='hidden' name='viewID' id='viewID' value='0011'>
+            <button>0011 閲覧</button>
+        </div>
+    </form>
+    <form action="view.html" method="get">
+        <div>
+            <input type='hidden' name='viewID' id='viewID' value='0012'>
+            <button>0012 閲覧</button>
+        </div>
+    </form>
+    <form action="view.html" method="get">
+    </form>
+
+    <a id='viewLink' href="view.html">リンク</a>
+
+
+</body>
+
+<script>
+    // リンク 押下イベント
+    $('#viewLink').on('click', function () {
+
+        //ローカルストレージに書き込み
+        jsonData = JSON.stringify(localData)
+        localStorage.setItem('localDataJson', jsonData);
+
+    });
+
+</script>
+
+</html>
