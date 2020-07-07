@@ -4,15 +4,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="js/function.js" defer></script>
+    <link rel="stylesheet" href="css/style.css">
+
+    <script src="js/dataAccess.js" defer></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <title>Document</title>
+    <title>KESHIKI メインページ</title>
 </head>
 
+<header>
+    <p>ここはヘッダー</p>
+    <div id='headerArea'></div>
+</header>
+
 <body>
+    <div class='mainWindowClass' id='mainWindowArea'></div>
+    <div class='nextPageLinkClass' id='nextPageLinkArea'></div>
+    <div id='sideBarArea'></div>
 
-
-    <form action="view.html" method="get">
+    <!-- <form action="view.html" method="get">
         <div>
             <input type='hidden' name='viewID' id='viewID' value='0001'>
             <button>0001 閲覧</button>
@@ -89,21 +98,209 @@
     <form action="view.html" method="get">
     </form>
 
-    <a id='viewLink' href="view.html">リンク</a>
+    <a id='viewLink' href="view.html">リンク</a> -->
 
 
 </body>
 
 <script>
-    // リンク 押下イベント
-    $('#viewLink').on('click', function () {
+    $(document).ready(function () {
+        const PAGEMAX = 6;  //1ページの最大サムネイル数
 
-        //ローカルストレージに書き込み
-        jsonData = JSON.stringify(localData)
-        localStorage.setItem('localDataJson', jsonData);
+        // リンク 押下イベント
+        // $('#viewLink').on('click', function () {
+
+        //     //ローカルストレージに書き込み
+        //     jsonData = JSON.stringify(localData)
+        //     localStorage.setItem('localDataJson', jsonData);
+
+        // });
+
+        // function dataInit() { }
+
+        //
+        //景色データ取得
+        //
+        // let keshikiData = dataInit();
+        let keshikiData = dataInit();
+        console.log(keshikiData);
+
+        //
+        //Likeの多い順に並び替え
+        //
+
+        // let viewID = params.get('viewID');
+        // let viewUrl = kishikiData[`keshiki_${viewID}`].url;
+        // let viewTitle = kishikiData[`keshiki_${viewID}`].title;
+
+
+        //
+        // Reactコンポーネント １つの景色を表示させる
+        //
+        // function CreateOnethumbnail(props) {
+        //     return (
+        //         <React.Fragment>
+        //             <iframe
+        //                 src={viewUrl}
+        //                 width="100"
+        //                 height="100"
+        //                 frameBorder="0"
+        //                 // style="border:0;"
+        //                 allowFullScreen=""
+        //                 aria-hidden="false"
+        //                 tabIndex="0"
+        //             >
+        //             </iframe>
+        //             <p>{viewTitle}</p>
+        //             <p>♡</p>
+        //             <p>Tag</p>
+
+        //         </React.Fragment>
+        //     );
+        // }
+
+        // //
+        // // Reactコンポーネント １つの景色を表示させる
+        // //
+        // function CreateAllthumbnail() {
+        //     return (
+        //         <React.Fragment>
+        //             for(let i=0;i<2;i++){
+        //                 <CreateOnethumbnail name="Sara" />
+        //             }
+        //         </React.Fragment>
+        //     );
+        // }
+
+        // ReactDOM.render(
+        //     <CreateAllthumbnail />,
+        //     document.getElementById('mainWindowArea')
+        // );
+
+        //
+        //検索条件にあったデータをLike順に並び替えて別の配列に入れる
+        //
+
+        //
+        //ページ単位に振り直す
+        //
+        let pageData = [];
+        let thumbNo = 0;
+        let pageNo = 0;
+
+        let keys = Object.keys(keshikiData);
+        // console.log('インデックスは');
+        // console.log(keys);
+        // console.log(keshikiData[keys[0]]);
+        // console.log(Object.keys(keshikiData).length);
+
+        // for (let keshikiNo = 0; keshikiNo < Object.keys(keshikiData).length; keshikiNo++) {
+        //     pageData
+        //     for (let thumbNo = 0; thumbNo < PAGEMAX; thumbNo++) {
+
+        //         pageData[pageNo][thumbNo] = keshikiData[keys[keshikiNo]];
+
+        //         console.log(pageData[pageNo][thumbNo]);
+
+        //         keshikiNo++;
+        //     }
+        //     pageNo++;
+        // }
+
+        for (let keshikiNo = 0; keshikiNo < Object.keys(keshikiData).length; keshikiNo++) {
+
+            pageData[thumbNo] = keshikiData[keys[keshikiNo]];
+
+            console.log(pageData[thumbNo]);
+
+            thumbNo++;
+        }
+
+        // Object.keys(keshikiData).foreach(function (key) {
+        //     pageData[pageNo][thumbNo] = item;
+        //     thumbNo++;
+        //     if (thumbNo = PAGEMAX) {
+        //         thumbNo = 0;
+        //         pageNo++;
+        //     }
+        // });
+        console.log('ページデータは');
+        console.log(pageData);
+        // console.log(pageData[1]);
+        // console.log(pageData[0][5]);
+        // console.log(pageData[1]);
+
+
+
+
+
+        //サムネイル作成
+        function createThumbnail(startIndex) {
+            let htmlText = '';
+            for (let i = 0; i < PAGEMAX; i++) {
+                htmlText += `
+                <form action="view.html" method="get">
+                    <div>
+                    <input type='hidden' name='viewID' id='viewID' value='0001'>
+                    <button>0001 閲覧</button>
+                    </div>
+                    <iframe
+                    src="${pageData[startIndex + i].url}"
+                    width="400"
+                    height="300"
+                    frameBorder="0"
+                    allowFullScreen=""
+                    aria-hidden="false"
+                    tabIndex="0"
+                >
+                </iframe>
+                <p>${pageData[startIndex + i].title}</p>
+                <p>♡</p>
+                <p>Tag</p>
+                </form>
+            `
+            }
+            $('#mainWindowArea').html(htmlText);
+        }
+
+        createThumbnail(0);
+
+        function createNextPageLink() {
+            let htmlText = '';
+            //必要なページ数を割り出す
+            let pageNum = pageData.length / PAGEMAX;
+            if ((pageData.length % PAGEMAX) != 0) {
+                pageNum++;
+            }
+            for (let i = 0; i < pageNum; i++) {
+
+                // htmlText += `
+                //     <div>
+                //         <a id='pageLink_${i}' name='pageLink' href="">${i + 1}</a>
+                //     </div>
+                // `
+                htmlText += `
+                    <div>
+                        <button id='pageLink_${i}' name='pageLink' value=${i + 1}>${i + 1}</button>
+                    </div>
+                `
+            }
+
+            $('#nextPageLinkArea').html(htmlText);
+        }
+
+        createNextPageLink();
+
+        //ページ選択クリック
+        $('#nextPageLinkArea').on('click', 'button[name="pageLink"]', function () {
+
+            let pageLink = this.value - 1;
+            let startIndex = pageLink * PAGEMAX;
+            createThumbnail(startIndex);
+
+        });
 
     });
-
 </script>
 
 </html>
