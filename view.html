@@ -35,8 +35,8 @@
     //
     let params = (new URL(document.location)).searchParams;
     var viewID = params.get('viewID');
-    let viewUrl = keshikiData[`keshiki_${viewID}`].url;
-    let viewTitle = keshikiData[`keshiki_${viewID}`].title;
+    let viewUrl = keshikiData[`${viewID}`].url;
+    let viewTitle = keshikiData[`${viewID}`].title;
 
     //
     // Reactコンポーネント １つの景色を表示させる
@@ -45,12 +45,10 @@
         return (
             <React.Fragment>
                 <iframe
-                    // src="https://www.google.com/maps/embed?pb=!4v1593765358970!6m8!1m7!1sNwa-koOQMUJAGrbAhb_5cg!2m2!1d33.58632479363997!2d130.3836489953995!3f268.8431591021055!4f8.550929291236955!5f0.7820865974627469"
                     src={viewUrl}
-                    width="600"
+                    width="980"
                     height="450"
                     frameBorder="0"
-                    // style="border:0;"
                     allowFullScreen=""
                     aria-hidden="false"
                     tabIndex="0"
