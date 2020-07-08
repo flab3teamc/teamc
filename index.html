@@ -14,12 +14,15 @@
 <header>
     <p>ここはヘッダー</p>
     <div id='headerArea'></div>
+    <div class='searchFormClass' id='searchFormArea'></div>
+    <hr>
 </header>
 
 <body>
+
     <div class='mainWindowClass' id='mainWindowArea'></div>
     <div class='nextPageLinkClass' id='nextPageLinkArea'></div>
-    <div id='sideBarArea'></div>
+
 </body>
 
 <script>
@@ -47,6 +50,10 @@
         //連想配列を無理やりインデックス付き配列に変換する関数
         //
         let pageData = getThumbnailArray(keshikiData);
+
+        console.log('createThumbnail呼ぶ直前のkeshikiData');
+        console.log(keshikiData);
+        console.log('createThumbnail呼ぶ直前のpageData');
         console.log(pageData);
 
         //
@@ -59,15 +66,84 @@
         //
         createNextPageLink(pageData, PAGEMAX);
 
+        //
+        //サイドバー作成
+        //
+
+        function createSearchForm() {
+            let htmlText = '';
+            htmlText += `
+                <p>
+                    <input type="text" id="titleSearchForm" name="searchForm">
+                    <button type='button' name='searchButton'>検索</button>
+                </p>
+            `
+            $('#searchFormArea').html(htmlText);
+
+        }
+
+        createSearchForm();
+
+
+        //
         //ページ選択クリック
+        //
         $('#nextPageLinkArea').on('click', 'button[name="pageLink"]', function () {
 
             let pageLink = this.value - 1;
             let startIndex = pageLink * PAGEMAX;
-            createThumbnail(pageData, startIndex, PAGEMAX);
+            console.log('ページボタンクリック');
+            console.log(keshikiData);
+            console.log(pageData);
+            createThumbnail(Object.keys(keshikiData), pageData, startIndex, PAGEMAX);
 
             // sessionStorage に開始Indexを保存する
             sessionStorage.setItem('startIndex', startIndex);
+        });
+
+
+
+        //
+        //検索ボタンクリック
+        //
+        $('#searchFormArea').on('click', 'button[name="searchButton"]', function () {
+
+            let searchWord = $('#titleSearchForm').val();
+
+
+            let keys = Object.keys(keshikiData);
+
+            let searchResult = [];
+
+            for (let keshikiNo = 0; keshikiNo < Object.keys(keshikiData).length; keshikiNo++) {
+                console.log(keshikiData[keys[keshikiNo]].title);
+                console.log($('#titleSearchForm').val());
+
+                if (keshikiData[keys[keshikiNo]].title.indexOf(searchWord) > -1) {
+                    console.log('一致');
+                    searchResult[keys[keshikiNo]] = keshikiData[keys[keshikiNo]];
+
+                }
+            }
+
+            pageData = getThumbnailArray(searchResult);
+
+            console.log('createThumbnail呼ぶ直前のsearchResult');
+            console.log(searchResult);
+            console.log('createThumbnail呼ぶ直前のpageData');
+            console.log(pageData);
+            createThumbnail(Object.keys(searchResult), pageData, 0, PAGEMAX);
+            createNextPageLink(pageData, PAGEMAX);
+
+            //こうすることで擬似ページ遷移に対応する
+            keshikiData = '';
+            keshikiData = searchResult;
+            console.log('書き換え後のkeshikiData');
+            console.log(keshikiData);
+            //pageData = getThumbnailArray(keshikiData);
+            console.log('書き換え後のpageData');
+            console.log(pageData);
+
         });
 
     });

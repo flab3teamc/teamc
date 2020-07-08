@@ -23,7 +23,7 @@ function dataInit() {
             keshiki_0002: {
                 //<iframe src="https://www.google.com/maps/embed?pb=!4v1593765731488!6m8!1m7!1sZgE9jSNR6akM7576e4AX-w!2m2!1d36.37318060451013!2d-106.5052204618661!3f182.5904027313087!4f-9.738863410754263!5f0.7820865974627469" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
                 url: 'https://www.google.com/maps/embed?pb=!4v1593765731488!6m8!1m7!1sZgE9jSNR6akM7576e4AX-w!2m2!1d36.37318060451013!2d-106.5052204618661!3f182.5904027313087!4f-9.738863410754263!5f0.7820865974627469',
-                title: 'アビクィウ, ニューメキシコ州',
+                title: 'アビクィウ大濠, ニューメキシコ州',
                 postUser: 'ユーザ１',
                 postDate: '2020/07/07',
                 likeUser: ['a'],
@@ -123,7 +123,7 @@ function dataInit() {
             keshiki_0012: {
                 //<iframe src="https://www.google.com/maps/embed?pb=!4v1593768281137!6m8!1m7!1smfsdVRvwZrF5XNZTCbnwMg!2m2!1d81.37874220760318!2d-76.81391384896602!3f320!4f20!5f0.7820865974627469" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
                 url: 'https://www.google.com/maps/embed?pb=!4v1593768281137!6m8!1m7!1smfsdVRvwZrF5XNZTCbnwMg!2m2!1d81.37874220760318!2d-76.81391384896602!3f320!4f20!5f0.7820865974627469',
-                title: 'クッティニルパーク国立公園',
+                title: 'クッティニルパーク国立公園 大濠',
                 postUser: 'ユーザ2',
                 postDate: '2020/07/07',
                 likeUser: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k'],
@@ -198,7 +198,15 @@ function getThumbnailArray(thumbObj) {
  **********************************************************/
 function createThumbnail(keys, pageData, startIndex, pageMax) {
     let htmlText = '';
-    for (let i = 0; i < pageMax; i++) {
+    let loopMax;
+
+    //表示件数がサムネイルの最大数より小さい場合は表示件数をMAXとする
+    if (pageData.length < pageMax) {
+        loopMax = pageData.length;
+    } else {
+        loopMax = pageMax;
+    }
+    for (let i = 0; i < loopMax; i++) {
         htmlText += `
                 <form action="view.html" method="get">
                     <div>
@@ -233,7 +241,8 @@ function createThumbnail(keys, pageData, startIndex, pageMax) {
 function createNextPageLink(pageData, pageMax) {
     let htmlText = '';
     //必要なページ数を割り出す
-    let pageNum = pageData.length / pageMax;
+    let pageNum = Math.floor(pageData.length / pageMax);
+    alert(pageNum);
     if ((pageData.length % pageMax) != 0) {
         pageNum++;
     }
