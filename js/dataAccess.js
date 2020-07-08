@@ -210,26 +210,91 @@ function createThumbnail(keys, pageData, startIndex, pageMax) {
         htmlText += `
                 <form action="view.html" method="get">
                     <div>
-                    <input type='hidden' name='viewID' id='viewID' value='${keys[startIndex + i]}'>
+                        <input type='hidden' name='viewID' id='viewID' value='${keys[startIndex + i]}'>
                     </div>
                     <iframe
-                    src="${pageData[startIndex + i].url}"
-                    width="400"
-                    height="300"
-                    frameBorder="0"
-                    allowFullScreen=""
-                    aria-hidden="false"
-                    tabIndex="0"
-                >
-                </iframe>
-                <p>${pageData[startIndex + i].title}</p>
-                <button>閲覧</button>
-                <p>♡</p>
-                <p>Tag</p>
+                        src="${pageData[startIndex + i].url}"
+                        width="400"
+                        height="300"
+                        frameBorder="0"
+                        allowFullScreen=""
+                        aria-hidden="false"
+                        tabIndex="0">
+                    </iframe>
+                    <p>${pageData[startIndex + i].title}</p>
+                    <button>閲覧</button>
+                    <p>♡</p>
+                    <p>Tag</p>
                 </form>
             `
     }
     $('#mainWindowArea').html(htmlText);
+}
+
+/**********************************************************
+ * サムネイル作成関数
+ * IN 連想配列のキーをインデックス化したもの
+ * IN 景色データが入ったインデックス付き配列
+ * IN 開始Index
+ * IN １ページに表示する最大件数
+ * OUT 無し
+ **********************************************************/
+function createThumbnail2(keys, pageData, startIndex, pageMax) {
+    let htmlText = '';
+    let loopMax;
+
+    //表示件数がサムネイルの最大数より小さい場合は表示件数をMAXとする
+    if (pageData.length < pageMax) {
+        loopMax = pageData.length;
+    } else {
+        loopMax = pageMax;
+    }
+    for (let i = 0; i < loopMax; i++) {
+        htmlText += `
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm">
+                    <!-- <img class="bd-placeholder-img card-img-top" src="img/river.jpg" alt="川"> -->
+                    <iframe class="bd-placeholder-img card-img-top"
+                        src="${pageData[startIndex + i].url}"
+                        width="400" height="300" frameborder="0" style="border:0;" allowfullscreen=""
+                        aria-hidden="false" tabindex="0"></iframe>
+
+                    <title>Placeholder</title>
+                    <rect width="100%" height="100%" fill="#55595c"></rect>
+                    <text x="50%" y="50%" fill="#eceeef" dy=".3em"></text>
+                    <!-- Thumbnail -->
+                    <div class="card-body">
+                        <p class="card-text">${pageData[startIndex + i].title}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+
+                                <form action="view.html" method="get">
+                                    <input type='hidden' name='viewID' id='viewID' value='${keys[startIndex + i]}'>
+                                    <button type="submit" class="btn btn-sm btn-outline-secondary">
+                                        View
+                                    </button>
+                                </form>
+
+                                
+                            </div>
+                            <!-- ハートマーク -->
+                            <button type="button" id="heart"
+                                class="_1hjZT _1jjdS _1CBrG _1WPby xLon9 Onk5k _17avz _1EJJ-"><svg
+                                    class="BWSrD" version="1.1" viewbox="0 0 32 32" width="15" height="15"
+                                    aria-hidden="false">
+                                    <path
+                                        d="M17.4 29c-.8.8-2 .8-2.8 0l-12.3-12.8c-3.1-3.1-3.1-8.2 0-11.4 3.1-3.1 8.2-3.1 11.3 0l2.4 2.8 2.3-2.8c3.1-3.1 8.2-3.1 11.3 0 3.1 3.1 3.1 8.2 0 11.4l-12.2 12.8z">
+                                    </path>
+                                </svg><span class="badge badge-light">4</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            `
+    }
+    $('#mainWindowArea2').html(htmlText);
+    //$('.container').html(htmlText);
 }
 
 /**********************************************************
@@ -242,7 +307,6 @@ function createNextPageLink(pageData, pageMax) {
     let htmlText = '';
     //必要なページ数を割り出す
     let pageNum = Math.floor(pageData.length / pageMax);
-    alert(pageNum);
     if ((pageData.length % pageMax) != 0) {
         pageNum++;
     }

@@ -1,0 +1,23 @@
+body {
+  width: 100%;
+}
+
+#search {
+  width: 30%;
+}
+
+.main_contents {
+  width: 70%;
+}
+
+.contents1,.contents2 {
+  display: flex;
+}
+
+/* .col-sm {
+  width: 240px;
+  height: 180px;
+} */
+
+
+
