@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/function.js" defer></script>
+    <script src="js/dataAccess.js" defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <title>KESHIKI 閲覧ページ</title>
+</head>
+
+<header>
+    <p>ここはヘッダー</p>
+    <div id='headerArea'></div>
+</header>
+
+<body>
+    <div id='viewArea'></div>
+</body>
+
+<script type="text/babel">
+
+    //
+    //景色データ取得
+    //
+    let keshikiData = dataInit();
+
+    //
+    //URLのGETパラメータから景色IDを取得
+    //
+    let params = (new URL(document.location)).searchParams;
+    var viewID = params.get('viewID');
+    let viewUrl = keshikiData[`${viewID}`].url;
+    let viewTitle = keshikiData[`${viewID}`].title;
+
+    //
+    // Reactコンポーネント １つの景色を表示させる
+    //
+    function CreateOneView(props) {
+        return (
+            <React.Fragment>
+                <iframe
+                    src={viewUrl}
+                    width="980"
+                    height="450"
+                    frameBorder="0"
+                    allowFullScreen=""
+                    aria-hidden="false"
+                    tabIndex="0"
+                >
+                </iframe>
+                <p>{viewTitle}</p>
+                <p>♡</p>
+                <p>Tag</p>
+
+            </React.Fragment>
+        );
+    }
+
+    //
+    // Reactコンポーネント １つの景色を表示させる
+    //
+    function CreateAllView() {
+        return (
+            <React.Fragment>
+                <CreateOneView name="Sara" />
+            </React.Fragment>
+        );
+    }
+
+    ReactDOM.render(
+        <CreateAllView />,
+        document.getElementById('viewArea')
+    );
+
+</script>
+
+</html>
