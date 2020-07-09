@@ -1,11 +1,14 @@
 /* データアクセス関数 */
 
-/**********************************************************
- * データ初期化
- * IN なし
- * OUT データの塊
- **********************************************************/
-function dataInit() {
+//********************************************************************************************************************************
+//
+// データ初期化(ローカルストレージバージョン)
+//
+// @param IN : なし
+// @return   : データの塊
+//
+//********************************************************************************************************************************
+function localDataInit() {
     if (localStorage.getItem('localDataJson') === null) {
         let localData;
         //ローカルストレージの初期設定(最終的にはここはfirebaseにアクセス)
@@ -144,12 +147,16 @@ function dataInit() {
     return localData;
 }
 
-/**********************************************************
- * 前回見ていたページをセッション情報として取得
- * IN なし
- * OUT 前回見ていた開始Index
- **********************************************************/
+//********************************************************************************************************************************
+//
+// 前回見ていたインデックス番号を取得
+//
+// @param IN なし
+// @return 前回見ていたインデックス番号
+//
+//********************************************************************************************************************************
 function getStartIndex() {
+
     let startIndex;
     // sessionStorage に保存した開始Indexを取得する
     if (sessionStorage.getItem('startIndex') === null) {
@@ -170,11 +177,14 @@ function getStartIndex() {
     return startIndex;
 }
 
-/**********************************************************
- * 連想配列を無理やりインデックス付き配列に変換する関数
- * IN 連想配列
- * OUT 連想配列をインデックス付き配列にしたもの
- **********************************************************/
+//********************************************************************************************************************************
+//
+// 連想配列を無理やりインデックス付き配列に変換する関数
+//
+// @param  IN thumbObj 連想配列
+// @return 連想配列をインデックス付き配列にしたもの
+//
+//********************************************************************************************************************************
 function getThumbnailArray(thumbObj) {
     let pageData = [];
     let thumbNo = 0;
@@ -188,14 +198,17 @@ function getThumbnailArray(thumbObj) {
     return pageData;
 }
 
-/**********************************************************
- * サムネイル作成関数
- * IN 連想配列のキーをインデックス化したもの
- * IN 景色データが入ったインデックス付き配列
- * IN 開始Index
- * IN １ページに表示する最大件数
- * OUT 無し
- **********************************************************/
+//********************************************************************************************************************************
+//
+// サムネイル作成関数
+//
+// @param IN keys        連想配列のキーをインデックス化したもの
+// @param IN pageData    景色データが入ったインデックス付き配列
+// @param IN startIndex  開始Index
+// @param IN pageMax     １ページに表示する最大件数
+// @return               無し
+//
+//********************************************************************************************************************************
 function createThumbnail(keys, pageData, startIndex, pageMax) {
     let htmlText = '';
     let loopMax;
@@ -210,39 +223,111 @@ function createThumbnail(keys, pageData, startIndex, pageMax) {
         htmlText += `
                 <form action="view.html" method="get">
                     <div>
-                    <input type='hidden' name='viewID' id='viewID' value='${keys[startIndex + i]}'>
+                        <input type='hidden' name='viewID' id='viewID' value='${keys[startIndex + i]}'>
                     </div>
                     <iframe
-                    src="${pageData[startIndex + i].url}"
-                    width="400"
-                    height="300"
-                    frameBorder="0"
-                    allowFullScreen=""
-                    aria-hidden="false"
-                    tabIndex="0"
-                >
-                </iframe>
-                <p>${pageData[startIndex + i].title}</p>
-                <button>閲覧</button>
-                <p>♡</p>
-                <p>Tag</p>
+                        src="${pageData[startIndex + i].url}"
+                        width="400"
+                        height="300"
+                        frameBorder="0"
+                        allowFullScreen=""
+                        aria-hidden="false"
+                        tabIndex="0">
+                    </iframe>
+                    <p>${pageData[startIndex + i].title}</p>
+                    <button>閲覧</button>
+                    <p>♡</p>
+                    <p>Tag</p>
                 </form>
             `
     }
     $('#mainWindowArea').html(htmlText);
 }
 
-/**********************************************************
- * ページリンク作成関数
- * IN 景色データが入ったインデックス付き配列
- * IN １ページに表示する最大件数
- * OUT 無し
- **********************************************************/
+//********************************************************************************************************************************
+//
+// サムネイル作成関数
+//
+// @param IN keys       : 連想配列のキーをインデックス化したもの
+// @param IN pageData   : 景色データが入ったインデックス付き配列
+// @param IN startIndex : 開始Index
+// @param IN pageMax    : １ページに表示する最大件数
+// @return              : 無し
+//
+//********************************************************************************************************************************
+function createThumbnail2(keys, pageData, startIndex, pageMax) {
+    let htmlText = '';
+    let loopMax;
+
+    //表示件数がサムネイルの最大数より小さい場合は表示件数をMAXとする
+    if (pageData.length < pageMax) {
+        loopMax = pageData.length;
+    } else {
+        loopMax = pageMax;
+    }
+    console.log(`startIndex${startIndex}`);
+    console.log(pageData);
+    for (let i = 0; i < loopMax; i++) {
+        htmlText += `
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm">
+                    <!-- <img class="bd-placeholder-img card-img-top" src="img/river.jpg" alt="川"> -->
+                    <iframe class="bd-placeholder-img card-img-top"
+                        src="${pageData[startIndex + i].url}"
+                        width="400" height="300" frameborder="0" style="border:0;" allowfullscreen=""
+                        aria-hidden="false" tabindex="0"></iframe>
+
+                    <title>Placeholder</title>
+                    <rect width="100%" height="100%" fill="#55595c"></rect>
+                    <text x="50%" y="50%" fill="#eceeef" dy=".3em"></text>
+                    <!-- Thumbnail -->
+                    <div class="card-body">
+                        <p class="card-text">${pageData[startIndex + i].title}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+
+                                <form action="view.html" method="get">
+                                    <input type='hidden' name='viewID' id='viewID' value='${keys[startIndex + i]}'>
+                                    <button type="submit" class="btn btn-sm btn-outline-secondary">
+                                        View
+                                    </button>
+                                </form>
+
+                                
+                            </div>
+                            <!-- ハートマーク -->
+                            <button type="button" id="heart"
+                                class="_1hjZT _1jjdS _1CBrG _1WPby xLon9 Onk5k _17avz _1EJJ-"><svg
+                                    class="BWSrD" version="1.1" viewbox="0 0 32 32" width="15" height="15"
+                                    aria-hidden="false">
+                                    <path
+                                        d="M17.4 29c-.8.8-2 .8-2.8 0l-12.3-12.8c-3.1-3.1-3.1-8.2 0-11.4 3.1-3.1 8.2-3.1 11.3 0l2.4 2.8 2.3-2.8c3.1-3.1 8.2-3.1 11.3 0 3.1 3.1 3.1 8.2 0 11.4l-12.2 12.8z">
+                                    </path>
+                                </svg><span class="badge badge-light">4</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            `
+    }
+    $('#mainWindowArea2').html(htmlText);
+    //$('.container').html(htmlText);
+}
+
+//********************************************************************************************************************************
+//
+// ページリンク作成関数
+//
+// @param IN pageData : 景色データが入ったインデックス付き配列
+// @param IN pageMax  : 1ページに表示する最大件数
+// @return            : 無し
+//
+//********************************************************************************************************************************
 function createNextPageLink(pageData, pageMax) {
     let htmlText = '';
     //必要なページ数を割り出す
     let pageNum = Math.floor(pageData.length / pageMax);
-    alert(pageNum);
     if ((pageData.length % pageMax) != 0) {
         pageNum++;
     }
@@ -255,4 +340,112 @@ function createNextPageLink(pageData, pageMax) {
     }
 
     $('#nextPageLinkArea').html(htmlText);
+}
+
+//********************************************************************************************************************************
+//
+// ページネーション作成関数
+//
+// @param IN pageData : 景色データが入ったインデックス付き配列
+// @param IN pageMax  : 1ページに表示する最大件数
+// @return            : 無し
+//
+//********************************************************************************************************************************
+function createPageNation(pageData, pageMax) {
+
+    //
+    //bootstrapを使ったページネーションのタグ
+    //
+    let htmlText = `
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-center" >
+                            <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>`;
+    //
+    //必要なページ数は表示する配列のインデックス数を、１ページに表示する最大件数で割り算した商
+    //ただし、割り切れた場合はそのまま使えるが、割り切れていない場合はプラス１ページしなければならない
+    //
+    let pageNum = Math.floor(pageData.length / pageMax);
+    if ((pageData.length % pageMax) != 0) {
+        pageNum++;
+    }
+
+    //
+    //ページネーションは必要な数だけ作成する。上限は今の所設けていない。
+    //
+    for (let i = 0; i < pageNum; i++) {
+        htmlText += `
+                            <li class="page-item">
+                                <a class="page-link" name="pageLink" href="#">${i + 1}</a>
+                            </li>`;
+    }
+
+    //
+    //bootstrapを使ったページネーションのタグ
+    //
+    htmlText += `            
+                            <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>`;
+
+    //
+    //IDがnextPageLinkAreaの場所にHTMLを埋め込み
+    //
+    $('#nextPageLinkArea').html(htmlText);
+}
+
+//****************************************************************
+//
+//１つの景色を表示させる
+//
+//@param IN 景色データ連想配列
+//@param IN 景色データキー
+//
+//****************************************************************
+function createView(keshikiData, viewID) {
+    let viewUrl = keshikiData[`${viewID}`].url;
+    let viewTitle = keshikiData[`${viewID}`].title;
+    let htmlText = '';
+    htmlText += `
+            <div class="card mb-4 shadow-sm">
+                <div class="embed-responsive embed-responsive-4by3">
+                    <iframe
+                        class="bd-placeholder-img card-img-top img-fluid"
+                        src=${viewUrl}
+                        width="100%"
+                        height="auto"
+                        frameBorder="0"
+                        allowFullScreen=""
+                        aria-hidden="false"
+                        tabIndex="0"
+                    ></iframe>
+                </div>
+
+                <div class="card-body">
+                    <p class="card-text">${viewTitle}</p>
+                    <button type="button" id="heart" class="_1hjZT _1jjdS _1CBrG _1WPby xLon9 Onk5k _17avz _1EJJ-">
+                        <svg class="BWSrD" version="1.1" viewbox="0 0 32 32" width="15" height="15" aria-hidden="false">
+                            <path d="M17.4 29c-.8.8-2 .8-2.8 0l-12.3-12.8c-3.1-3.1-3.1-8.2 0-11.4 3.1-3.1 8.2-3.1 11.3 0l2.4 2.8 2.3-2.8c3.1-3.1 8.2-3.1 11.3 0 3.1 3.1 3.1 8.2 0 11.4l-12.2 12.8z"></path>
+                        </svg>
+                        <span class="badge badge-light">4</span>
+                    </button>
+                    <class class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-light my-1 btn-outline-secondary rounded-pill">＃山</button>
+                            <button type="button" class="btn btn-light my-1 btn-outline-secondary rounded-pill">＃海</button>
+                            <button type="button" class="btn btn-light my-1 btn-outline-secondary rounded-pill">＃空</button>
+                            <button type="button" class="btn btn-light my-1 btn-outline-secondary rounded-pill">＃旅</button>
+                        </div>
+                        <button type="button" class="btn btn-light my-1 btn-outline-primary rounded-pill">一覧に戻る</button>
+                    </class>
+                </div>
+            </div>`;
+    $('#viewArea').html(htmlText);
 }
