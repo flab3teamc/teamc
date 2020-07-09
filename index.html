@@ -8,6 +8,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous" />
+    <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Galada&display=swap" rel="stylesheet">
 
     <!-- Optional JavaScript -->
@@ -59,18 +60,24 @@
     </style>
 </head>
 
+<!--------------------------------------------->
 <!-- Bootstrapでは画面を縦に12分割するという考え方 -->
+<!--------------------------------------------->
 
 <body>
     <div class="row">
-        <!-- 画面を縦に12分割する内の2列分にサイドバー記載 -->
+        <!---------------------------------------------------------------->
+        <!-- 画面を縦に12分割する内の2列分にサイドバー記載                     -->
+        <!---------------------------------------------------------------->
         <div class="col-md-2">
-            <!-- サイドバー検索 -->
+            <!---------------------------------------------------------------->
+            <!-- 検索フォーム                                                 -->
+            <!---------------------------------------------------------------->
             <div class="input-group mb-3 my-3">
-                <input class="form-control" type="search" placeholder="Search" aria-label="Search"
-                    aria-describedby="button-addon2" />
+                <input class="form-control" type="Search" placeholder="Search" aria-label="Search"
+                    aria-describedby="button-addon2" id="titleSearchForm" />
                 <div class="input-group-append">
-                    <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">
+                    <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit" id="searchButton">
                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor"
                             xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd"
@@ -82,7 +89,9 @@
                 </div>
             </div>
 
-            <!-- サイドバー多い順 -->
+            <!---------------------------------------------------------------->
+            <!-- タグ                                                        -->
+            <!---------------------------------------------------------------->
             <div id="list-example" class="list-group">
                 <button type="button" class="btn btn-light my-1 btn-outline-secondary rounded-pill">＃山
                 </button>
@@ -95,11 +104,15 @@
             </div>
         </div>
 
-        <!-- 画面を縦に12分割する内の10列分に画像配置 -->
+        <!---------------------------------------------------------------->
+        <!-- 画面を縦に12分割する内の10列分にサムネイル画像配置                 -->
+        <!---------------------------------------------------------------->
         <div class="col-md-10">
-            <!-- ナビバー -->
+            <!---------------------------------------------------------------->
+            <!-- タイトル 投稿ボタンエリア                                      -->
+            <!---------------------------------------------------------------->
             <nav class="navbar navbar-light bg-light my-2">
-                <a class="navbar-brand">TravelGoo</a>
+                <a class="navbar-brand">TravelGo</a>
 
                 <form class="form-inline">
                     <button class="btn btn-outline-secondary rounded-pill my-2 my-sm-0 mr-md-4" type="submit">投 稿
@@ -109,20 +122,20 @@
                     </button>
                 </form>
             </nav>
-            <!-- メイン画像 -->
+            <!---------------------------------------------------------------->
+            <!-- メイン サムネイル画像配置エリア                                 -->
+            <!---------------------------------------------------------------->
             <div class="main_contents">
                 <div class="container">
-                    <div class="row">
+                    <!---------------------------------------------------------------->
+                    <!-- サムネイル画像を挿入                                          -->
+                    <!---------------------------------------------------------------->
+                    <div class='row' id='mainWindowArea2'></div>
+                    <!---------------------------------------------------------------->
+                    <!-- ページネーションを挿入                                         -->
+                    <!---------------------------------------------------------------->
+                    <div class='nextPageLinkClass' id='nextPageLinkArea'></div>
 
-                        <!-- ここにjQueryで景色を挿入 -->
-                        <div class='row' id='mainWindowArea2'></div>
-
-                        <!-- ここにjQueryでページネーションを挿入 -->
-                        <div class='nextPageLinkClass' id='nextPageLinkArea'>
-                        </div>
-                        <!-- <nav aria-label="Page navigation example" id='nextPageLinkArea'></nav> -->
-
-                    </div>
                 </div>
             </div>
         </div>
@@ -209,7 +222,8 @@
         //****************************************************************
         //検索ボタンクリック
         //****************************************************************
-        $('#searchFormArea').on('click', 'button[name="searchButton"]', function () {
+        // $('#searchFormArea').on('click', 'button[name="searchButton"]', function () {
+        $('#searchButton').on('click', function () {
 
             let searchWord = $('#titleSearchForm').val();
 

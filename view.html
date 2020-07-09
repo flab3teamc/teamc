@@ -8,6 +8,9 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Galada&display=swap" rel="stylesheet">
+
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -44,7 +47,26 @@
 </head>
 
 <body>
-    <div id='viewArea'></div>
+    <div class="col-md-11 rounded mx-auto d-block">
+        <!---------------------------------------------------------------->
+        <!-- タイトル 投稿ボタンエリア                                      -->
+        <!---------------------------------------------------------------->
+        <nav class="navbar navbar-light bg-light my-2">
+            <a class="navbar-brand">TravelGo</a>
+
+            <form class="form-inline">
+                <button class="btn btn-outline-secondary rounded-pill my-2 my-sm-0 mr-md-4" type="submit">投 稿
+                </button>
+                <img src="img/original.jpg" class="mr-md-4" width="30" height="30" id="icon" alt="グーグルアイコン">
+                <button class="btn btn-outline-secondary rounded-pill my-2 my-sm-0" type="submit">login
+                </button>
+            </form>
+        </nav>
+        <!---------------------------------------------------------------->
+        <!-- 閲覧エリア                                                   -->
+        <!---------------------------------------------------------------->
+        <div id='viewArea'></div>
+    </div>
 </body>
 
 
