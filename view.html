@@ -24,6 +24,9 @@
         integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
         crossorigin="anonymous"></script>
 
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase.js"></script>
+
     <!-- 自分で作ったファイルたち -->
     <link rel="stylesheet" href="css/style.css">
     <script src="js/dataAccess.js" defer></script>
@@ -89,19 +92,54 @@
         //****************************************************************
         //景色データ取得
         //****************************************************************
-        let keshikiData = localDataInit();
-        console.log(keshikiData);
+        // let keshikiData = localDataInit();
 
-        //****************************************************************
-        //URLのGETパラメータから景色IDを取得
-        //****************************************************************
-        let params = (new URL(document.location)).searchParams;
-        var viewID = params.get('viewID');
-        let viewUrl = keshikiData[`${viewID}`].url;
-        let viewTitle = keshikiData[`${viewID}`].title;
+        let keshikiData = {};
+        let pageData = [];
+        let startIndex;
+
+        var firebaseConfig = {
+            apiKey: "AIzaSyAxft5DF9MnsnbTZGywDs4SkcljfMSQSjY",
+            authDomain: "team-c-13512.firebaseapp.com",
+            databaseURL: "https://team-c-13512.firebaseio.com",
+            projectId: "team-c-13512",
+            storageBucket: "team-c-13512.appspot.com",
+            messagingSenderId: "764246205884",
+            appId: "1:764246205884:web:42805c139b5fdfb8a777b9"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        let db = firebase.firestore().collection('post');
+
+        // let firebaseData = { test: 'aaa' };
+        let firebaseData = {};
+
+        db.get()
+            .then(function (querySnapshot) {
+                //****************************************************************
+                //firebaseからのデータを前提とした処理は全部この中に書かなければならないっぽい
+                //****************************************************************
+
+                querySnapshot.forEach(function (doc) {
+                    keshikiData[doc.id] = doc.data();
+                });
+
+                console.log('firebaseから全部引っ張ってきた');
+                console.log(keshikiData);
+
+                //****************************************************************
+                //URLのGETパラメータから景色IDを取得
+                //****************************************************************
+                let params = (new URL(document.location)).searchParams;
+                var viewID = params.get('viewID');
+                let viewUrl = keshikiData[`${viewID}`].url;
+                let viewTitle = keshikiData[`${viewID}`].title;
 
 
-        createView(keshikiData, viewID);
+                createView(keshikiData, viewID);
+            });
     });
 </script>
 
