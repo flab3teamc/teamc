@@ -2,14 +2,14 @@
 <html lang="ja">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous" />
     <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Galada&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Galada&display=swap" rel="stylesheet" />
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -23,11 +23,11 @@
         integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
         crossorigin="anonymous"></script>
 
-    <!-- The core Firebase JS SDK is always required and must be listed first -->
+	<!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase.js"></script>
 
     <!-- 自分で作ったファイルたち -->
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css" />
     <script src="js/dataAccess.js" defer></script>
 
     <title>TravelGo</title>
@@ -42,6 +42,7 @@
 
         .col-md-2 {
             background-color: #88bfbf;
+            border: none;
         }
 
         body {
@@ -52,8 +53,12 @@
         /* アプリ名 */
         a.navbar-brand {
             font-weight: bold;
-            font-family: 'Galada', cursive;
-            font-size: 30px
+            font-family: "Galada", cursive;
+            font-size: 35px;
+            color: #fc4a1a;
+            background: -webkit-linear-gradient(0deg, #fc4a1a, #f7b733);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         #heart {
@@ -89,8 +94,18 @@
 
         #loader {
             font-weight: bold;
-            font-family: 'Galada', cursive;
-            font-size: 30px
+            font-family: "Galada", cursive;
+            font-size: 40px;
+        }
+
+        .card-body {
+            background-color: #d5e0e0;
+        }
+
+        .navbar.navbar-light.my-2 {
+            background-color: #d5e0e0;
+            padding-top: 0;
+            padding-bottom: 0;
         }
     </style>
 </head>
@@ -102,7 +117,7 @@
 <body>
     <div id="loader-bg">
         <div id="loader">
-            <p>Now Loading...<br>Welcom to Travel Go</p>
+            <p>Now Loading...<br />Welcom to Travel Go</p>
         </div>
     </div>
 
@@ -113,7 +128,7 @@
             <!---------------------------------------------------------------->
             <!-- 画面を縦に12分割する内の2列分にサイドバー記載                     -->
             <!---------------------------------------------------------------->
-            <div class="col-md-2">
+            <div class="col-md-2 shadow-lg p-3 mb-5 rounded">
                 <!---------------------------------------------------------------->
                 <!-- 検索フォーム                                                 -->
                 <!---------------------------------------------------------------->
@@ -137,13 +152,17 @@
                 <!-- タグ                                                        -->
                 <!---------------------------------------------------------------->
                 <div id="list-example" class="list-group">
-                    <button type="button" class="btn btn-light my-1 btn-outline-secondary rounded-pill">＃山
+                    <button type="button" class="btn btn-light my-1 btn-outline-secondary rounded-pill">
+                        ＃山
                     </button>
-                    <button type="button" class="btn btn-light my-1 btn-outline-secondary rounded-pill">＃海
+                    <button type="button" class="btn btn-light my-1 btn-outline-secondary rounded-pill">
+                        ＃海
                     </button>
-                    <button type="button" class="btn btn-light my-1 btn-outline-secondary rounded-pill">＃空
+                    <button type="button" class="btn btn-light my-1 btn-outline-secondary rounded-pill">
+                        ＃空
                     </button>
-                    <button type="button" class="btn btn-light my-1 btn-outline-secondary rounded-pill">＃旅
+                    <button type="button" class="btn btn-light my-1 btn-outline-secondary rounded-pill">
+                        ＃旅
                     </button>
                 </div>
             </div>
@@ -155,14 +174,17 @@
                 <!---------------------------------------------------------------->
                 <!-- タイトル 投稿ボタンエリア                                      -->
                 <!---------------------------------------------------------------->
-                <nav class="navbar navbar-light bg-light my-2">
-                    <a class="navbar-brand">TravelGo</a>
+                <nav class="navbar navbar-light my-2">
+                    <a class="navbar-brand">Travel Go</a>
 
                     <form class="form-inline">
-                        <button class="btn btn-outline-secondary rounded-pill my-2 my-sm-0 mr-md-4" type="submit">投 稿
+                        <button class="btn btn-light btn-outline-secondary rounded-pill my-2 my-sm-0 mr-md-4"
+                            type="submit">
+                            投 稿
                         </button>
-                        <img src="img/original.jpg" class="mr-md-4" width="30" height="30" id="icon" alt="グーグルアイコン">
-                        <button class="btn btn-outline-secondary rounded-pill my-2 my-sm-0" type="submit">login
+                        <img src="img/original.jpg" class="mr-md-4" width="30" height="30" id="icon" alt="グーグルアイコン" />
+                        <button class="btn btn-light btn-outline-secondary rounded-pill my-2 my-sm-0" type="submit">
+                            login
                         </button>
                     </form>
                 </nav>
@@ -174,29 +196,24 @@
                         <!---------------------------------------------------------------->
                         <!-- サムネイル画像を挿入                                          -->
                         <!---------------------------------------------------------------->
-                        <div class='row' id='mainWindowArea2'></div>
+                        <div class="row" id="mainWindowArea2"></div>
                         <!---------------------------------------------------------------->
                         <!-- ページネーションを挿入                                         -->
                         <!---------------------------------------------------------------->
-                        <div class='nextPageLinkClass' id='nextPageLinkArea'></div>
-
+                        <div class="nextPageLinkClass" id="nextPageLinkArea"></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-
-
 </body>
 
 <script>
     $(document).ready(function () {
-
         //****************************************************************
         //定数定義
         //****************************************************************
-        const PAGEMAX = 6;  //1ページの最大サムネイル数
+        const PAGEMAX = 6; //1ページの最大サムネイル数
 
         //****************************************************************
         //景色データ取得
@@ -222,9 +239,9 @@
         //****************************************************************
         let pageData = getThumbnailArray(keshikiData);
 
-        console.log('createThumbnail呼ぶ直前のkeshikiData');
+        console.log("createThumbnail呼ぶ直前のkeshikiData");
         console.log(keshikiData);
-        console.log('createThumbnail呼ぶ直前のpageData');
+        console.log("createThumbnail呼ぶ直前のpageData");
         console.log(pageData);
 
         //****************************************************************
@@ -238,96 +255,112 @@
         createPageNation(pageData, PAGEMAX);
 
         //****************************************************************
+        //検索フォーム作成
+        //****************************************************************
+        function createSearchForm() {
+            let htmlText = "";
+            htmlText += `
+                <p>
+                    <input type="text" id="titleSearchForm" name="searchForm">
+                    <button type='button' name='searchButton'>検索</button>
+                </p>
+            `;
+            $("#searchFormArea").html(htmlText);
+        }
+
+        createSearchForm();
+
+        //****************************************************************
         //ページ選択クリック
         //****************************************************************
-        $('#nextPageLinkArea').on('click', 'a[name="pageLink"]', function () {
+        $("#nextPageLinkArea").on("click", 'a[name="pageLink"]', function () {
             let pageLink = this.text - 1;
             let startIndex = pageLink * PAGEMAX;
-            console.log('ページボタンクリック');
+            console.log("ページボタンクリック");
             console.log(keshikiData);
             console.log(pageData);
-            createThumbnail2(Object.keys(keshikiData), pageData, startIndex, PAGEMAX);
+            createThumbnail2(
+                Object.keys(keshikiData),
+                pageData,
+                startIndex,
+                PAGEMAX
+            );
 
             // sessionStorage に開始Indexを保存する
-            sessionStorage.setItem('startIndex', startIndex);
+            sessionStorage.setItem("startIndex", startIndex);
         });
 
         //****************************************************************
         //検索ボタンクリック
         //****************************************************************
         // $('#searchFormArea').on('click', 'button[name="searchButton"]', function () {
-        $('#searchButton').on('click', function () {
-
-            let searchWord = $('#titleSearchForm').val();
+        $("#searchButton").on("click", function () {
+            let searchWord = $("#titleSearchForm").val();
 
             let keys = Object.keys(keshikiData);
 
             let searchResult = [];
 
-            for (let keshikiNo = 0; keshikiNo < Object.keys(keshikiData).length; keshikiNo++) {
+            for (
+                let keshikiNo = 0;
+                keshikiNo < Object.keys(keshikiData).length;
+                keshikiNo++
+            ) {
                 console.log(keshikiData[keys[keshikiNo]].title);
-                console.log($('#titleSearchForm').val());
+                console.log($("#titleSearchForm").val());
 
                 if (keshikiData[keys[keshikiNo]].title.indexOf(searchWord) > -1) {
-                    console.log('一致');
+                    console.log("一致");
                     searchResult[keys[keshikiNo]] = keshikiData[keys[keshikiNo]];
-
                 }
             }
 
             pageData = getThumbnailArray(searchResult);
 
-            console.log('createThumbnail呼ぶ直前のsearchResult');
+            console.log("createThumbnail呼ぶ直前のsearchResult");
             console.log(searchResult);
-            console.log('createThumbnail呼ぶ直前のpageData');
+            console.log("createThumbnail呼ぶ直前のpageData");
             console.log(pageData);
             createThumbnail2(Object.keys(searchResult), pageData, 0, PAGEMAX);
             // createNextPageLink(pageData, PAGEMAX);
             createPageNation(pageData, PAGEMAX);
 
             //こうすることで擬似ページ遷移に対応する
-            keshikiData = '';
+            keshikiData = "";
             keshikiData = searchResult;
-            console.log('書き換え後のkeshikiData');
+            console.log("書き換え後のkeshikiData");
             console.log(keshikiData);
             //pageData = getThumbnailArray(keshikiData);
-            console.log('書き換え後のpageData');
+            console.log("書き換え後のpageData");
             console.log(pageData);
-
         });
-
-
     });
 </script>
-
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script>
-    //****************************************************************
-    //スプラッシュウインドウ
-    //****************************************************************
     $(function () {
         var h = $(window).height();
 
-        $('#wrap').css('display', 'none');
-        $('#loader-bg ,#loader').height(h).css('display', 'block');
+        $("#wrap").css("display", "none");
+        $("#loader-bg ,#loader").height(h).css("display", "block");
     });
 
-    $(window).load(function () { //全ての読み込みが完了したら実行
-        $('#loader-bg').delay(900).fadeOut(800);
-        $('#loader').delay(600).fadeOut(300);
-        $('#wrap').css('display', 'block');
+    $(window).load(function () {
+        //全ての読み込みが完了したら実行
+        $("#loader-bg").delay(900).fadeOut(800);
+        $("#loader").delay(600).fadeOut(300);
+        $("#wrap").css("display", "block");
     });
 
     //10秒たったら強制的にロード画面を非表示
     $(function () {
-        setTimeout('stopload()', 10000);
+        setTimeout("stopload()", 10000);
     });
 
     function stopload() {
-        $('#wrap').css('display', 'block');
-        $('#loader-bg').delay(900).fadeOut(800);
-        $('#loader').delay(600).fadeOut(300);
+        $("#wrap").css("display", "block");
+        $("#loader-bg").delay(900).fadeOut(800);
+        $("#loader").delay(600).fadeOut(300);
     }
 </script>
 
