@@ -8,7 +8,7 @@
 // @return   : データの塊
 //
 //********************************************************************************************************************************
-function dataInit() {
+function localDataInit() {
     if (localStorage.getItem('localDataJson') === null) {
         let localData;
         //ローカルストレージの初期設定(最終的にはここはfirebaseにアクセス)
@@ -399,4 +399,55 @@ function createPageNation(pageData, pageMax) {
     //IDがnextPageLinkAreaの場所にHTMLを埋め込み
     //
     $('#nextPageLinkArea').html(htmlText);
+}
+
+//****************************************************************
+//
+//１つの景色を表示させる
+//
+//@param IN 景色データ連想配列
+//@param IN 景色データキー
+//
+//****************************************************************
+function createView(keshikiData, viewID) {
+    let viewUrl = keshikiData[`${viewID}`].url;
+    let viewTitle = keshikiData[`${viewID}`].title;
+    let htmlText = '';
+    htmlText += `
+                <div class="col-md-10 rounded mx-auto d-block">
+                    <div class="card mb-4 shadow-sm">
+                        <div class="embed-responsive embed-responsive-4by3">
+                            <iframe
+                                class="bd-placeholder-img card-img-top img-fluid"
+                                src=${viewUrl}
+                                width="980"
+                                height="100%"
+                                frameBorder="0"
+                                allowFullScreen=""
+                                aria-hidden="false"
+                                tabIndex="0"
+                            ></iframe>
+                        </div>
+
+                        <div class="card-body">
+                            <p class="card-text">${viewTitle}</p>
+                            <button type="button" id="heart" class="_1hjZT _1jjdS _1CBrG _1WPby xLon9 Onk5k _17avz _1EJJ-">
+                                <svg class="BWSrD" version="1.1" viewbox="0 0 32 32" width="15" height="15" aria-hidden="false">
+                                    <path d="M17.4 29c-.8.8-2 .8-2.8 0l-12.3-12.8c-3.1-3.1-3.1-8.2 0-11.4 3.1-3.1 8.2-3.1 11.3 0l2.4 2.8 2.3-2.8c3.1-3.1 8.2-3.1 11.3 0 3.1 3.1 3.1 8.2 0 11.4l-12.2 12.8z"></path>
+                                </svg>
+                                <span class="badge badge-light">4</span>
+                            </button>
+                            <class class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-light my-1 btn-outline-secondary rounded-pill">＃山</button>
+                                    <button type="button" class="btn btn-light my-1 btn-outline-secondary rounded-pill">＃海</button>
+                                    <button type="button" class="btn btn-light my-1 btn-outline-secondary rounded-pill">＃空</button>
+                                    <button type="button" class="btn btn-light my-1 btn-outline-secondary rounded-pill">＃旅</button>
+                                </div>
+                                <button type="button" class="btn btn-light my-1 btn-outline-primary rounded-pill">一覧に戻る</button>
+                            </class>
+                        </div>
+                    </div>
+                </div>`;
+    $('#viewArea').html(htmlText);
 }
