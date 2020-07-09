@@ -21,7 +21,7 @@ function convertFromFirestoreTimestampToDatetime(timestamp) {
 
 //************************************************************************************************
 //
-//firebaseからデータ読み出し
+//firebaseからデータ読み出し（未使用）
 //
 //@param IN : 無し
 //@return   : firebaseデータの塊
@@ -44,22 +44,47 @@ function firebaseDataInit() {
 
     let db = firebase.firestore().collection('post');
 
+    // let firebaseData = { test: 'aaa' };
     let firebaseData = {};
 
-    db.get().then(function (querySnapshot) {
-        querySnapshot.forEach(function (doc) {
-            console.log(doc.id, " => ", doc.data());
+    db.get()
+        .then(function (querySnapshot) {
 
-            firebaseData[doc.id] = doc.data();
+            querySnapshot.forEach(function (doc) {
+                // console.log(doc.id, " => ", doc.data());
+
+                // console.log(doc.id);
+                firebaseData[doc.id] = doc.data();
+                // console.log(firebaseData[doc.id]);
+                // console.log("firebaseData['8Kqq8y2r6smtKDpIV3C3']");
+                // console.log(firebaseData['8Kqq8y2r6smtKDpIV3C3']);
+                // firebaseData.set(doc.id, doc.data());
+                // firebaseData = Object.assign(firebaseData, doc.data());
+
+            });
+            // console.log('querySnapshot.val()');
+            // console.log(querySnapshot.getValue());
+            console.log('firebaseから全部引っ張ってきた');
+            console.log(firebaseData);
+            // console.log(firebaseData['5snea8qt27zYlj3hh0HR']);
+            // alert(firebaseData);
+            return firebaseData;
 
         });
 
+    sleep(5, function () {
+
+        console.log('firebaseDataInitの中で5秒経過しました！');
+
     });
+    // console.log('firebaseから全部引っ張ってきた');
+    // console.log(firebaseData);
+    // console.log(firebaseData['5snea8qt27zYlj3hh0HR']);
+    // alert(firebaseData);
 
-    console.log('firebaseから全部引っ張ってきた');
-    console.log(firebaseData);
 
-    return firebaseData;
+
+
 }
 
 //************************************************************************************************
@@ -252,6 +277,8 @@ function getThumbnailArray(thumbObj) {
     let thumbNo = 0;
     let pageNo = 0;
     let keys = Object.keys(thumbObj);
+
+    console.log(`keys  ${keys}`)
 
     for (let keshikiNo = 0; keshikiNo < Object.keys(thumbObj).length; keshikiNo++) {
         pageData[thumbNo] = thumbObj[keys[keshikiNo]];
@@ -512,3 +539,26 @@ function createView(keshikiData, viewID) {
     $('#viewArea').html(htmlText);
 }
 
+
+function sleep(waitSec, callbackFunc) {
+
+    // 経過時間（秒）
+    var spanedSec = 0;
+
+    // 1秒間隔で無名関数を実行
+    var id = setInterval(function () {
+
+        spanedSec++;
+
+        // 経過時間 >= 待機時間の場合、待機終了。
+        if (spanedSec >= waitSec) {
+
+            // タイマー停止
+            clearInterval(id);
+
+            // 完了時、コールバック関数を実行
+            if (callbackFunc) callbackFunc();
+        }
+    }, 1000);
+
+}
