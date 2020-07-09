@@ -60,6 +60,37 @@
             border: none;
             fill: rgb(197, 36, 8);
         }
+
+        #loader-bg {
+            display: none;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0px;
+            left: 0px;
+            background: url(./img/login.jpg);
+            background-size: cover;
+            z-index: 1;
+        }
+        #loader {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 200px;
+            height: 200px;
+            margin-top: -100px;
+            margin-left: -100px;
+            text-align: center;
+            color: #fff;
+            z-index: 2;
+        }
+
+        #loader {
+            font-weight: bold;
+            font-family: 'Galada', cursive;
+            font-size: 30px
+        }
     </style>
 </head>
 
@@ -68,81 +99,92 @@
 <!--------------------------------------------->
 
 <body>
-    <div class="row">
-        <!---------------------------------------------------------------->
-        <!-- 画面を縦に12分割する内の2列分にサイドバー記載                     -->
-        <!---------------------------------------------------------------->
-        <div class="col-md-2">
-            <!---------------------------------------------------------------->
-            <!-- 検索フォーム                                                 -->
-            <!---------------------------------------------------------------->
-            <div class="input-group mb-3 my-3">
-                <input class="form-control" type="Search" placeholder="Search" aria-label="Search"
-                    aria-describedby="button-addon2" id="titleSearchForm" />
-                <div class="input-group-append">
-                    <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit" id="searchButton">
-                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                                d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z" />
-                            <path fill-rule="evenodd"
-                                d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
-                        </svg>
-                    </button>
-                </div>
-            </div>
-
-            <!---------------------------------------------------------------->
-            <!-- タグ                                                        -->
-            <!---------------------------------------------------------------->
-            <div id="list-example" class="list-group">
-                <button type="button" class="btn btn-light my-1 btn-outline-secondary rounded-pill">＃山
-                </button>
-                <button type="button" class="btn btn-light my-1 btn-outline-secondary rounded-pill">＃海
-                </button>
-                <button type="button" class="btn btn-light my-1 btn-outline-secondary rounded-pill">＃空
-                </button>
-                <button type="button" class="btn btn-light my-1 btn-outline-secondary rounded-pill">＃旅
-                </button>
-            </div>
-        </div>
-
-        <!---------------------------------------------------------------->
-        <!-- 画面を縦に12分割する内の10列分にサムネイル画像配置                 -->
-        <!---------------------------------------------------------------->
-        <div class="col-md-10">
-            <!---------------------------------------------------------------->
-            <!-- タイトル 投稿ボタンエリア                                      -->
-            <!---------------------------------------------------------------->
-            <nav class="navbar navbar-light bg-light my-2">
-                <a class="navbar-brand">TravelGo</a>
-
-                <form class="form-inline">
-                    <button class="btn btn-outline-secondary rounded-pill my-2 my-sm-0 mr-md-4" type="submit">投 稿
-                    </button>
-                    <img src="img/original.jpg" class="mr-md-4" width="30" height="30" id="icon" alt="グーグルアイコン">
-                    <button class="btn btn-outline-secondary rounded-pill my-2 my-sm-0" type="submit">login
-                    </button>
-                </form>
-            </nav>
-            <!---------------------------------------------------------------->
-            <!-- メイン サムネイル画像配置エリア                                 -->
-            <!---------------------------------------------------------------->
-            <div class="main_contents">
-                <div class="container">
-                    <!---------------------------------------------------------------->
-                    <!-- サムネイル画像を挿入                                          -->
-                    <!---------------------------------------------------------------->
-                    <div class='row' id='mainWindowArea2'></div>
-                    <!---------------------------------------------------------------->
-                    <!-- ページネーションを挿入                                         -->
-                    <!---------------------------------------------------------------->
-                    <div class='nextPageLinkClass' id='nextPageLinkArea'></div>
-
-                </div>
-            </div>
+    <div id="loader-bg">
+        <div id="loader">
+          <p>Now Loading...<br>Welcom to Travel Go</p>
         </div>
     </div>
+
+    <div id="wrap">
+        <!-- ロード後に表示させたい内容 -->
+
+        <div class="row">
+            <!---------------------------------------------------------------->
+            <!-- 画面を縦に12分割する内の2列分にサイドバー記載                     -->
+            <!---------------------------------------------------------------->
+            <div class="col-md-2">
+                <!---------------------------------------------------------------->
+                <!-- 検索フォーム                                                 -->
+                <!---------------------------------------------------------------->
+                <div class="input-group mb-3 my-3">
+                    <input class="form-control" type="Search" placeholder="Search" aria-label="Search"
+                        aria-describedby="button-addon2" id="titleSearchForm" />
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit" id="searchButton">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z" />
+                                <path fill-rule="evenodd"
+                                    d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+    
+                <!---------------------------------------------------------------->
+                <!-- タグ                                                        -->
+                <!---------------------------------------------------------------->
+                <div id="list-example" class="list-group">
+                    <button type="button" class="btn btn-light my-1 btn-outline-secondary rounded-pill">＃山
+                    </button>
+                    <button type="button" class="btn btn-light my-1 btn-outline-secondary rounded-pill">＃海
+                    </button>
+                    <button type="button" class="btn btn-light my-1 btn-outline-secondary rounded-pill">＃空
+                    </button>
+                    <button type="button" class="btn btn-light my-1 btn-outline-secondary rounded-pill">＃旅
+                    </button>
+                </div>
+            </div>
+    
+            <!---------------------------------------------------------------->
+            <!-- 画面を縦に12分割する内の10列分にサムネイル画像配置                 -->
+            <!---------------------------------------------------------------->
+            <div class="col-md-10">
+                <!---------------------------------------------------------------->
+                <!-- タイトル 投稿ボタンエリア                                      -->
+                <!---------------------------------------------------------------->
+                <nav class="navbar navbar-light bg-light my-2">
+                    <a class="navbar-brand">TravelGo</a>
+    
+                    <form class="form-inline">
+                        <button class="btn btn-outline-secondary rounded-pill my-2 my-sm-0 mr-md-4" type="submit">投 稿
+                        </button>
+                        <img src="img/original.jpg" class="mr-md-4" width="30" height="30" id="icon" alt="グーグルアイコン">
+                        <button class="btn btn-outline-secondary rounded-pill my-2 my-sm-0" type="submit">login
+                        </button>
+                    </form>
+                </nav>
+                <!---------------------------------------------------------------->
+                <!-- メイン サムネイル画像配置エリア                                 -->
+                <!---------------------------------------------------------------->
+                <div class="main_contents">
+                    <div class="container">
+                        <!---------------------------------------------------------------->
+                        <!-- サムネイル画像を挿入                                          -->
+                        <!---------------------------------------------------------------->
+                        <div class='row' id='mainWindowArea2'></div>
+                        <!---------------------------------------------------------------->
+                        <!-- ページネーションを挿入                                         -->
+                        <!---------------------------------------------------------------->
+                        <div class='nextPageLinkClass' id='nextPageLinkArea'></div>
+    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>    
+
 
 
 </body>
@@ -274,6 +316,32 @@
 
 
     });
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script>
+    $(function() {
+      var h = $(window).height();
+      
+      $('#wrap').css('display','none');
+      $('#loader-bg ,#loader').height(h).css('display','block');
+    });
+      
+    $(window).load(function () { //全ての読み込みが完了したら実行
+      $('#loader-bg').delay(900).fadeOut(800);
+      $('#loader').delay(600).fadeOut(300);
+      $('#wrap').css('display', 'block');
+    });
+      
+    //10秒たったら強制的にロード画面を非表示
+    $(function(){
+      setTimeout('stopload()',10000);
+    });
+      
+    function stopload(){
+      $('#wrap').css('display','block');
+      $('#loader-bg').delay(900).fadeOut(800);
+      $('#loader').delay(600).fadeOut(300);
+    }
 </script>
 
 </html>
