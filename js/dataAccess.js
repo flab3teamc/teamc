@@ -349,12 +349,13 @@ function createThumbnail2(keys, pageData, startIndex, pageMax) {
     let loopMax;
 
     //表示件数がサムネイルの最大数より小さい場合は表示件数をMAXとする
-    if (pageData.length < pageMax) {
-        loopMax = pageData.length;
+    if (pageData.length - startIndex < pageMax) {
+        loopMax = pageData.length - startIndex;
     } else {
         loopMax = pageMax;
     }
-    console.log(`startIndex${startIndex}`);
+    console.log(`loopMax  ${loopMax}`);
+    console.log(`startIndex  ${startIndex}`);
     console.log(pageData);
     for (let i = 0; i < loopMax; i++) {
         htmlText += `
