@@ -1,0 +1,125 @@
+<!------------------------------------------->
+<!--------------投稿ページ------------------->
+<!------------------------------------------->
+
+
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <table>
+        <tr>
+            <td>URL</td>
+            <td><input type="text" id="url"></td>
+        </tr>
+        <tr>
+            <td>タイトル</td>
+            <td><input type="text" id="title"></td>
+        </tr>
+        <tr>
+            <td>タグ</td>
+            <td><input type="text" id="tag"></td>
+        </tr>
+    </table>
+    <button id="send">投稿</button>
+
+    <!-- <p id="test"><iframe
+            src="https://www.google.com/maps/embed?pb=!4v1594274329243!6m8!1m7!1skYmpeT3w0QZmUZnzvWp94Q!2m2!1d33.59142890562735!2d130.3815541959186!3f77.59331208844807!4f14.014511664468145!5f0.7820865974627469"
+            width="400" height="300" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false"
+            tabindex="0"></iframe></p> -->
+
+
+
+    <!------------------------------------->
+    <!----------firebase --------------->
+    <!------------------------------------->
+
+
+    <!--?   ↓↓↓以下、firebase 接続部分 -->
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase.js"></script>
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+    https://firebase.google.com/docs/web/setup#available-libraries -->
+
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyAxft5DF9MnsnbTZGywDs4SkcljfMSQSjY",
+            authDomain: "team-c-13512.firebaseapp.com",
+            databaseURL: "https://team-c-13512.firebaseio.com",
+            projectId: "team-c-13512",
+            storageBucket: "team-c-13512.appspot.com",
+            messagingSenderId: "764246205884",
+            appId: "1:764246205884:web:42805c139b5fdfb8a777b9"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        let db = firebase.firestore().collection('post');
+
+        function convertFromFirestoreTimestampToDatetime(timestamp) {
+            const _d = timestamp ? new Date(timestamp * 1000) : new Date();
+            const Y = _d.getFullYear();
+            const m = (_d.getMonth() + 1).toString().padStart(2, '0');
+            const d = _d.getDate().toString().padStart(2, '0');
+            const H = _d.getHours().toString().padStart(2, '0');
+            const i = _d.getMinutes().toString().padStart(2, '0');
+            const s = _d.getSeconds().toString().padStart(2, '0');
+            return `${Y}/${m}/${d} ${H}:${i}:${s}`;
+        }
+
+    // <!--?  ↑↑↑以上、firebase 接続部分 -->
+
+
+        // // テスト
+        // let content = document.getElementById("test").innerHTML;
+        // let test = content.split('"')
+        // let test_map = test[1];
+        // console.log(test[1]);
+        // console.log(test_map);
+        // // テスト以上
+
+
+
+        //<!--?------------------------------------------>
+        // <!--?   ↓↓↓『投稿』を押下後、firebaseに送信
+        //<!--?------------------------------------------->
+
+        $("#send").on("click", function () {
+            // 以下、タグを,で分ける。
+            let tags = $("#tag").val();
+            let tag_arry = tags.split(",");
+
+
+            // 以下、リンク抽出
+            let iframe_tag = $("#url").val();
+            let url_split = iframe_tag.split('"');
+            let url_map = url_split[1];
+            // console.log(url_map);
+   
+
+
+            const dateObject = {
+                url: url_map,
+                title: $("#title").val(),
+                tag: tag_arry,
+                time: firebase.firestore.FieldValue.serverTimestamp()
+            }
+            db.add(dateObject);
+            $('#url').val('');
+            $('#title').val('');
+            $('#tag').val('');
+        });
+    </script>
+</body>
+
+</html>
