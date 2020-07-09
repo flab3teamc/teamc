@@ -2675,6 +2675,8 @@ output {
   transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
   transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
   transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+  /* 以下、新嶋追加 */
+  /* width: 440px!important; */
 }
 .form-control:focus {
   border-color: #66afe9;
