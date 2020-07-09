@@ -217,57 +217,69 @@
     //****************************************************************
     //景色データ取得
     //****************************************************************
-    let keshikiData = localDataInit();
-    console.log('初回keshikiData');
-    console.log(keshikiData);
-    let keshikiData2 = firebaseDataInit();
-    console.log('初回keshikiData2');
-    console.log(keshikiData2);
+    // let keshikiData = localDataInit();
 
-    //****************************************************************
-    //前回見ていたページをセッションストレージから取得
-    //****************************************************************
-    let startIndex = getStartIndex();
+    let keshikiData = {};
+    let pageData = [];
+    let startIndex;
 
-    //****************************************************************
-    //Likeの多い順に並び替え（TBD）
-    //****************************************************************
+    var firebaseConfig = {
+      apiKey: "AIzaSyAxft5DF9MnsnbTZGywDs4SkcljfMSQSjY",
+      authDomain: "team-c-13512.firebaseapp.com",
+      databaseURL: "https://team-c-13512.firebaseio.com",
+      projectId: "team-c-13512",
+      storageBucket: "team-c-13512.appspot.com",
+      messagingSenderId: "764246205884",
+      appId: "1:764246205884:web:42805c139b5fdfb8a777b9"
+    };
 
-    //****************************************************************
-    //連想配列を無理やりインデックス付き配列に変換する
-    //****************************************************************
-    let pageData = getThumbnailArray(keshikiData);
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
 
-    console.log("createThumbnail呼ぶ直前のkeshikiData");
-    console.log(keshikiData);
-    console.log("createThumbnail呼ぶ直前のpageData");
-    console.log(pageData);
+    let db = firebase.firestore().collection('post');
 
-    //****************************************************************
-    //サムネイル郡作成
-    //****************************************************************/
-    createThumbnail2(Object.keys(keshikiData), pageData, startIndex, PAGEMAX);
+    // let firebaseData = { test: 'aaa' };
+    let firebaseData = {};
 
-    //****************************************************************
-    //ページネーション作成
-    //****************************************************************
-    createPageNation(pageData, PAGEMAX);
+    db.get()
+      .then(function (querySnapshot) {
+        //****************************************************************
+        //firebaseからのデータを前提とした処理は全部この中に書かなければならないっぽい
+        //****************************************************************
 
-    //****************************************************************
-    //検索フォーム作成
-    //****************************************************************
-    function createSearchForm() {
-      let htmlText = "";
-      htmlText += `
-                <p>
-                    <input type="text" id="titleSearchForm" name="searchForm">
-                    <button type='button' name='searchButton'>検索</button>
-                </p>
-            `;
-      $("#searchFormArea").html(htmlText);
-    }
+        querySnapshot.forEach(function (doc) {
+          keshikiData[doc.id] = doc.data();
+        });
 
-    createSearchForm();
+        console.log('firebaseから全部引っ張ってきた');
+        console.log(keshikiData);
+
+        //****************************************************************
+        //前回見ていたページをセッションストレージから取得
+        //****************************************************************
+        startIndex = getStartIndex();
+
+        //****************************************************************
+        //連想配列を無理やりインデックス付き配列に変換する
+        //****************************************************************
+        pageData = getThumbnailArray(keshikiData);
+
+        console.log("createThumbnail呼ぶ直前のkeshikiData");
+        console.log(keshikiData);
+        console.log("createThumbnail呼ぶ直前のpageData");
+        console.log(pageData);
+
+        //****************************************************************
+        //サムネイル郡作成
+        //****************************************************************/
+        createThumbnail2(Object.keys(keshikiData), pageData, startIndex, PAGEMAX);
+
+        //****************************************************************
+        //ページネーション作成
+        //****************************************************************
+        createPageNation(pageData, PAGEMAX);
+
+      });
 
     //****************************************************************
     //ページ選択クリック
