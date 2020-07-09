@@ -1,415 +1,366 @@
 <!DOCTYPE html>
 <html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Bootstrap CSS -->
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
-      crossorigin="anonymous"
-    />
-    <!-- Google Font -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Galada&display=swap"
-      rel="stylesheet"
-    />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script
-      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
-      integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
-      crossorigin="anonymous"
-    ></script>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous" />
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Galada&display=swap" rel="stylesheet" />
 
-    <!-- 自分で作ったファイルたち -->
-    <link rel="stylesheet" href="css/style.css" />
-    <script src="js/dataAccess.js" defer></script>
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+    integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+    crossorigin="anonymous"></script>
 
-    <title>TravelGo</title>
-    <style>
-      #icon {
-        border-radius: 50%;
-      }
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase.js"></script>
 
-      #list-example {
-        width: 80px;
-      }
+  <!-- 自分で作ったファイルたち -->
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="js/dataAccess.js" defer></script>
 
-      .col-md-2 {
-        background-color: #88bfbf;
-        border: none;
-      }
+  <title>TravelGo</title>
+  <style>
+    #icon {
+      border-radius: 50%;
+    }
 
-      body {
-        width: 100%;
-        height: 100%;
-      }
+    #list-example {
+      width: 80px;
+    }
 
-      /* アプリ名 */
-      a.navbar-brand {
-        font-weight: bold;
-        font-family: "Galada", cursive;
-        font-size: 35px;
-        color: #fc4a1a;
-        background: -webkit-linear-gradient(0deg, #fc4a1a, #f7b733);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
+    .col-md-2 {
+      background-color: #88bfbf;
+      border: none;
+    }
 
-      #heart {
-        border: none;
-        fill: rgb(197, 36, 8);
-      }
+    body {
+      width: 100%;
+      height: 100%;
+    }
 
-      #loader-bg {
-        display: none;
-        position: fixed;
-        width: 100%;
-        height: 100%;
-        top: 0px;
-        left: 0px;
-        background: url(./img/login.jpg);
-        background-size: cover;
-        z-index: 1;
-      }
+    /* アプリ名 */
+    a.navbar-brand {
+      font-weight: bold;
+      font-family: "Galada", cursive;
+      font-size: 35px;
+      color: #fc4a1a;
+      background: -webkit-linear-gradient(0deg, #fc4a1a, #f7b733);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
 
-      #loader {
-        display: none;
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        width: 200px;
-        height: 200px;
-        margin-top: -100px;
-        margin-left: -100px;
-        text-align: center;
-        color: #fff;
-        z-index: 2;
-      }
+    #heart {
+      border: none;
+      fill: rgb(197, 36, 8);
+    }
 
-      #loader {
-        font-weight: bold;
-        font-family: "Galada", cursive;
-        font-size: 40px;
-      }
+    #loader-bg {
+      display: none;
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0px;
+      left: 0px;
+      background: url(./img/login.jpg);
+      background-size: cover;
+      z-index: 1;
+    }
 
-      .card-body {
-        background-color: #d5e0e0;
-      }
+    #loader {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 200px;
+      height: 200px;
+      margin-top: -100px;
+      margin-left: -100px;
+      text-align: center;
+      color: #fff;
+      z-index: 2;
+    }
 
-      .navbar.navbar-light.my-2 {
-        background-color: #d5e0e0;
-        padding-top: 0;
-        padding-bottom: 0;
-      }
+    #loader {
+      font-weight: bold;
+      font-family: "Galada", cursive;
+      font-size: 40px;
+    }
 
-    </style>
-  </head>
+    .card-body {
+      background-color: #d5e0e0;
+    }
 
-  <!--------------------------------------------->
-  <!-- Bootstrapでは画面を縦に12分割するという考え方 -->
-  <!--------------------------------------------->
+    .navbar.navbar-light.my-2 {
+      background-color: #d5e0e0;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+  </style>
+</head>
 
-  <body>
-    <div id="loader-bg">
-      <div id="loader">
-        <p>Now Loading...<br />Welcom to Travel Go</p>
-      </div>
+<!--------------------------------------------->
+<!-- Bootstrapでは画面を縦に12分割するという考え方 -->
+<!--------------------------------------------->
+
+<body>
+  <div id="loader-bg">
+    <div id="loader">
+      <p>Now Loading...<br />Welcom to Travel Go</p>
     </div>
+  </div>
 
-    <div id="wrap">
-      <!-- ロード後に表示させたい内容 -->
+  <div id="wrap">
+    <!-- ロード後に表示させたい内容 -->
 
-      <div class="row">
+    <div class="row">
+      <!---------------------------------------------------------------->
+      <!-- 画面を縦に12分割する内の2列分にサイドバー記載                     -->
+      <!---------------------------------------------------------------->
+      <div class="col-md-2 shadow-lg p-3 mb-5 rounded">
         <!---------------------------------------------------------------->
-        <!-- 画面を縦に12分割する内の2列分にサイドバー記載                     -->
+        <!-- 検索フォーム                                                 -->
         <!---------------------------------------------------------------->
-        <div class="col-md-2 shadow-lg p-3 mb-5 rounded">
-          <!---------------------------------------------------------------->
-          <!-- 検索フォーム                                                 -->
-          <!---------------------------------------------------------------->
-          <div class="input-group mb-3 my-3">
-            <input
-              class="form-control"
-              type="Search"
-              placeholder="Search"
-              aria-label="Search"
-              aria-describedby="button-addon2"
-              id="titleSearchForm"
-            />
-            <div class="input-group-append">
-              <button
-                class="btn btn-outline-secondary my-2 my-sm-0"
-                type="submit"
-                id="searchButton"
-              >
-                <svg
-                  width="1em"
-                  height="1em"
-                  viewBox="0 0 16 16"
-                  class="bi bi-search"
-                  fill="currentColor"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"
-                  />
-                  <path
-                    fill-rule="evenodd"
-                    d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"
-                  />
-                </svg>
-              </button>
-            </div>
-          </div>
-
-          <!---------------------------------------------------------------->
-          <!-- タグ                                                        -->
-          <!---------------------------------------------------------------->
-          <div id="list-example" class="list-group">
-            <button
-              type="button"
-              class="btn btn-light my-1 btn-outline-secondary rounded-pill"
-            >
-              ＃山
-            </button>
-            <button
-              type="button"
-              class="btn btn-light my-1 btn-outline-secondary rounded-pill"
-            >
-              ＃海
-            </button>
-            <button
-              type="button"
-              class="btn btn-light my-1 btn-outline-secondary rounded-pill"
-            >
-              ＃空
-            </button>
-            <button
-              type="button"
-              class="btn btn-light my-1 btn-outline-secondary rounded-pill"
-            >
-              ＃旅
+        <div class="input-group mb-3 my-3">
+          <input class="form-control" type="Search" placeholder="Search" aria-label="Search"
+            aria-describedby="button-addon2" id="titleSearchForm" />
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit" id="searchButton">
+              <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                  d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z" />
+                <path fill-rule="evenodd"
+                  d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
+              </svg>
             </button>
           </div>
         </div>
 
         <!---------------------------------------------------------------->
-        <!-- 画面を縦に12分割する内の10列分にサムネイル画像配置                 -->
+        <!-- タグ                                                        -->
         <!---------------------------------------------------------------->
-        <div class="col-md-10">
-          <!---------------------------------------------------------------->
-          <!-- タイトル 投稿ボタンエリア                                      -->
-          <!---------------------------------------------------------------->
-          <nav class="navbar navbar-light my-2">
-            <a class="navbar-brand">Travel Go</a>
+        <div id="list-example" class="list-group">
+          <button type="button" class="btn btn-light my-1 btn-outline-secondary rounded-pill">
+            ＃山
+          </button>
+          <button type="button" class="btn btn-light my-1 btn-outline-secondary rounded-pill">
+            ＃海
+          </button>
+          <button type="button" class="btn btn-light my-1 btn-outline-secondary rounded-pill">
+            ＃空
+          </button>
+          <button type="button" class="btn btn-light my-1 btn-outline-secondary rounded-pill">
+            ＃旅
+          </button>
+        </div>
+      </div>
 
-            <form class="form-inline">
-              <button
-                class="btn btn-light btn-outline-secondary rounded-pill my-2 my-sm-0 mr-md-4"
-                type="submit"
-              >
-                投 稿
-              </button>
-              <img
-                src="img/original.jpg"
-                class="mr-md-4"
-                width="30"
-                height="30"
-                id="icon"
-                alt="グーグルアイコン"
-              />
-              <button
-                class="btn btn-light btn-outline-secondary rounded-pill my-2 my-sm-0"
-                type="submit"
-              >
-                login
-              </button>
-            </form>
-          </nav>
-          <!---------------------------------------------------------------->
-          <!-- メイン サムネイル画像配置エリア                                 -->
-          <!---------------------------------------------------------------->
-          <div class="main_contents">
-            <div class="container">
-              <!---------------------------------------------------------------->
-              <!-- サムネイル画像を挿入                                          -->
-              <!---------------------------------------------------------------->
-              <div class="row" id="mainWindowArea2"></div>
-              <!---------------------------------------------------------------->
-              <!-- ページネーションを挿入                                         -->
-              <!---------------------------------------------------------------->
-              <div class="nextPageLinkClass" id="nextPageLinkArea"></div>
-            </div>
+      <!---------------------------------------------------------------->
+      <!-- 画面を縦に12分割する内の10列分にサムネイル画像配置                 -->
+      <!---------------------------------------------------------------->
+      <div class="col-md-10">
+        <!---------------------------------------------------------------->
+        <!-- タイトル 投稿ボタンエリア                                      -->
+        <!---------------------------------------------------------------->
+        <nav class="navbar navbar-light my-2">
+          <a class="navbar-brand">Travel Go</a>
+
+          <form class="form-inline">
+            <button class="btn btn-light btn-outline-secondary rounded-pill my-2 my-sm-0 mr-md-4" type="submit">
+              投 稿
+            </button>
+            <img src="img/original.jpg" class="mr-md-4" width="30" height="30" id="icon" alt="グーグルアイコン" />
+            <button class="btn btn-light btn-outline-secondary rounded-pill my-2 my-sm-0" type="submit">
+              login
+            </button>
+          </form>
+        </nav>
+        <!---------------------------------------------------------------->
+        <!-- メイン サムネイル画像配置エリア                                 -->
+        <!---------------------------------------------------------------->
+        <div class="main_contents">
+          <div class="container">
+            <!---------------------------------------------------------------->
+            <!-- サムネイル画像を挿入                                          -->
+            <!---------------------------------------------------------------->
+            <div class="row" id="mainWindowArea2"></div>
+            <!---------------------------------------------------------------->
+            <!-- ページネーションを挿入                                         -->
+            <!---------------------------------------------------------------->
+            <div class="nextPageLinkClass" id="nextPageLinkArea"></div>
           </div>
         </div>
       </div>
     </div>
-  </body>
+  </div>
+</body>
 
-  <script>
-    $(document).ready(function () {
-      //****************************************************************
-      //定数定義
-      //****************************************************************
-      const PAGEMAX = 6; //1ページの最大サムネイル数
+<script>
+  $(document).ready(function () {
+    //****************************************************************
+    //定数定義
+    //****************************************************************
+    const PAGEMAX = 6; //1ページの最大サムネイル数
 
-      //****************************************************************
-      //景色データ取得
-      //****************************************************************
-      let keshikiData = localDataInit();
+    //****************************************************************
+    //景色データ取得
+    //****************************************************************
+    let keshikiData = localDataInit();
+    console.log('初回keshikiData');
+    console.log(keshikiData);
+    let keshikiData2 = firebaseDataInit();
+    console.log('初回keshikiData2');
+    console.log(keshikiData2);
 
-      //****************************************************************
-      //前回見ていたページをセッションストレージから取得
-      //****************************************************************
-      let startIndex = getStartIndex();
+    //****************************************************************
+    //前回見ていたページをセッションストレージから取得
+    //****************************************************************
+    let startIndex = getStartIndex();
 
-      //****************************************************************
-      //Likeの多い順に並び替え（TBD）
-      //****************************************************************
+    //****************************************************************
+    //Likeの多い順に並び替え（TBD）
+    //****************************************************************
 
-      //****************************************************************
-      //連想配列を無理やりインデックス付き配列に変換する
-      //****************************************************************
-      let pageData = getThumbnailArray(keshikiData);
+    //****************************************************************
+    //連想配列を無理やりインデックス付き配列に変換する
+    //****************************************************************
+    let pageData = getThumbnailArray(keshikiData);
 
-      console.log("createThumbnail呼ぶ直前のkeshikiData");
-      console.log(keshikiData);
-      console.log("createThumbnail呼ぶ直前のpageData");
-      console.log(pageData);
+    console.log("createThumbnail呼ぶ直前のkeshikiData");
+    console.log(keshikiData);
+    console.log("createThumbnail呼ぶ直前のpageData");
+    console.log(pageData);
 
-      //****************************************************************
-      //サムネイル郡作成
-      //****************************************************************/
-      createThumbnail2(Object.keys(keshikiData), pageData, startIndex, PAGEMAX);
+    //****************************************************************
+    //サムネイル郡作成
+    //****************************************************************/
+    createThumbnail2(Object.keys(keshikiData), pageData, startIndex, PAGEMAX);
 
-      //****************************************************************
-      //ページネーション作成
-      //****************************************************************
-      createPageNation(pageData, PAGEMAX);
+    //****************************************************************
+    //ページネーション作成
+    //****************************************************************
+    createPageNation(pageData, PAGEMAX);
 
-      //****************************************************************
-      //検索フォーム作成
-      //****************************************************************
-      function createSearchForm() {
-        let htmlText = "";
-        htmlText += `
+    //****************************************************************
+    //検索フォーム作成
+    //****************************************************************
+    function createSearchForm() {
+      let htmlText = "";
+      htmlText += `
                 <p>
                     <input type="text" id="titleSearchForm" name="searchForm">
                     <button type='button' name='searchButton'>検索</button>
                 </p>
             `;
-        $("#searchFormArea").html(htmlText);
+      $("#searchFormArea").html(htmlText);
+    }
+
+    createSearchForm();
+
+    //****************************************************************
+    //ページ選択クリック
+    //****************************************************************
+    $("#nextPageLinkArea").on("click", 'a[name="pageLink"]', function () {
+      let pageLink = this.text - 1;
+      let startIndex = pageLink * PAGEMAX;
+      console.log("ページボタンクリック");
+      console.log(keshikiData);
+      console.log(pageData);
+      createThumbnail2(
+        Object.keys(keshikiData),
+        pageData,
+        startIndex,
+        PAGEMAX
+      );
+
+      // sessionStorage に開始Indexを保存する
+      sessionStorage.setItem("startIndex", startIndex);
+    });
+
+    //****************************************************************
+    //検索ボタンクリック
+    //****************************************************************
+    // $('#searchFormArea').on('click', 'button[name="searchButton"]', function () {
+    $("#searchButton").on("click", function () {
+      let searchWord = $("#titleSearchForm").val();
+
+      let keys = Object.keys(keshikiData);
+
+      let searchResult = [];
+
+      for (
+        let keshikiNo = 0;
+        keshikiNo < Object.keys(keshikiData).length;
+        keshikiNo++
+      ) {
+        console.log(keshikiData[keys[keshikiNo]].title);
+        console.log($("#titleSearchForm").val());
+
+        if (keshikiData[keys[keshikiNo]].title.indexOf(searchWord) > -1) {
+          console.log("一致");
+          searchResult[keys[keshikiNo]] = keshikiData[keys[keshikiNo]];
+        }
       }
 
-      createSearchForm();
+      pageData = getThumbnailArray(searchResult);
 
-      //****************************************************************
-      //ページ選択クリック
-      //****************************************************************
-      $("#nextPageLinkArea").on("click", 'a[name="pageLink"]', function () {
-        let pageLink = this.text - 1;
-        let startIndex = pageLink * PAGEMAX;
-        console.log("ページボタンクリック");
-        console.log(keshikiData);
-        console.log(pageData);
-        createThumbnail2(
-          Object.keys(keshikiData),
-          pageData,
-          startIndex,
-          PAGEMAX
-        );
+      console.log("createThumbnail呼ぶ直前のsearchResult");
+      console.log(searchResult);
+      console.log("createThumbnail呼ぶ直前のpageData");
+      console.log(pageData);
+      createThumbnail2(Object.keys(searchResult), pageData, 0, PAGEMAX);
+      // createNextPageLink(pageData, PAGEMAX);
+      createPageNation(pageData, PAGEMAX);
 
-        // sessionStorage に開始Indexを保存する
-        sessionStorage.setItem("startIndex", startIndex);
-      });
-
-      //****************************************************************
-      //検索ボタンクリック
-      //****************************************************************
-      // $('#searchFormArea').on('click', 'button[name="searchButton"]', function () {
-      $("#searchButton").on("click", function () {
-        let searchWord = $("#titleSearchForm").val();
-
-        let keys = Object.keys(keshikiData);
-
-        let searchResult = [];
-
-        for (
-          let keshikiNo = 0;
-          keshikiNo < Object.keys(keshikiData).length;
-          keshikiNo++
-        ) {
-          console.log(keshikiData[keys[keshikiNo]].title);
-          console.log($("#titleSearchForm").val());
-
-          if (keshikiData[keys[keshikiNo]].title.indexOf(searchWord) > -1) {
-            console.log("一致");
-            searchResult[keys[keshikiNo]] = keshikiData[keys[keshikiNo]];
-          }
-        }
-
-        pageData = getThumbnailArray(searchResult);
-
-        console.log("createThumbnail呼ぶ直前のsearchResult");
-        console.log(searchResult);
-        console.log("createThumbnail呼ぶ直前のpageData");
-        console.log(pageData);
-        createThumbnail2(Object.keys(searchResult), pageData, 0, PAGEMAX);
-        // createNextPageLink(pageData, PAGEMAX);
-        createPageNation(pageData, PAGEMAX);
-
-        //こうすることで擬似ページ遷移に対応する
-        keshikiData = "";
-        keshikiData = searchResult;
-        console.log("書き換え後のkeshikiData");
-        console.log(keshikiData);
-        //pageData = getThumbnailArray(keshikiData);
-        console.log("書き換え後のpageData");
-        console.log(pageData);
-      });
+      //こうすることで擬似ページ遷移に対応する
+      keshikiData = "";
+      keshikiData = searchResult;
+      console.log("書き換え後のkeshikiData");
+      console.log(keshikiData);
+      //pageData = getThumbnailArray(keshikiData);
+      console.log("書き換え後のpageData");
+      console.log(pageData);
     });
-  </script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-  <script>
-    $(function () {
-      var h = $(window).height();
+  });
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>
+  $(function () {
+    var h = $(window).height();
 
-      $("#wrap").css("display", "none");
-      $("#loader-bg ,#loader").height(h).css("display", "block");
-    });
+    $("#wrap").css("display", "none");
+    $("#loader-bg ,#loader").height(h).css("display", "block");
+  });
 
-    $(window).load(function () {
-      //全ての読み込みが完了したら実行
-      $("#loader-bg").delay(900).fadeOut(800);
-      $("#loader").delay(600).fadeOut(300);
-      $("#wrap").css("display", "block");
-    });
+  $(window).load(function () {
+    //全ての読み込みが完了したら実行
+    $("#loader-bg").delay(900).fadeOut(800);
+    $("#loader").delay(600).fadeOut(300);
+    $("#wrap").css("display", "block");
+  });
 
-    //10秒たったら強制的にロード画面を非表示
-    $(function () {
-      setTimeout("stopload()", 10000);
-    });
+  //10秒たったら強制的にロード画面を非表示
+  $(function () {
+    setTimeout("stopload()", 10000);
+  });
 
-    function stopload() {
-      $("#wrap").css("display", "block");
-      $("#loader-bg").delay(900).fadeOut(800);
-      $("#loader").delay(600).fadeOut(300);
-    }
-  </script>
+  function stopload() {
+    $("#wrap").css("display", "block");
+    $("#loader-bg").delay(900).fadeOut(800);
+    $("#loader").delay(600).fadeOut(300);
+  }
+</script>
+
 </html>
