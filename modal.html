@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modal Window</title>
+  <link rel="stylesheet" href="css/styles.css">
+
+</head>
+<body>
+  <div id="open">
+    投稿画面
+  </div>
+  <div id="mask" class="hidden"></div>
+  <section id="modal" class="hidden">
+    <p>
+      <label for="url">U　R　L :</label>
+      <input type="text" name="url" id="url">
+    </p>
+    <p>
+      <label for="title">タイトル :</label>
+      <input type="text" name="title" id="title">
+    </p>
+    <p>
+      <label for="tag">タ　　グ :</label>
+      <input type="text" name="tag" id="tag">
+    </p>
+    <div id="close">投　稿</div>
+
+  </section>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
