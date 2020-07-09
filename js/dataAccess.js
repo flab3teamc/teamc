@@ -288,7 +288,7 @@ function createThumbnail2(keys, pageData, startIndex, pageMax) {
 
                                 <form action="view.html" method="get">
                                     <input type='hidden' name='viewID' id='viewID' value='${keys[startIndex + i]}'>
-                                    <button type="submit" class="btn btn-sm btn-outline-secondary">
+                                    <button type="submit" class="btn btn-light btn-sm btn-outline-secondary">
                                         View
                                     </button>
                                 </form>
