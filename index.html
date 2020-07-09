@@ -72,6 +72,7 @@
             background-size: cover;
             z-index: 1;
         }
+
         #loader {
             display: none;
             position: fixed;
@@ -101,7 +102,7 @@
 <body>
     <div id="loader-bg">
         <div id="loader">
-          <p>Now Loading...<br>Welcom to Travel Go</p>
+            <p>Now Loading...<br>Welcom to Travel Go</p>
         </div>
     </div>
 
@@ -131,7 +132,7 @@
                         </button>
                     </div>
                 </div>
-    
+
                 <!---------------------------------------------------------------->
                 <!-- タグ                                                        -->
                 <!---------------------------------------------------------------->
@@ -146,7 +147,7 @@
                     </button>
                 </div>
             </div>
-    
+
             <!---------------------------------------------------------------->
             <!-- 画面を縦に12分割する内の10列分にサムネイル画像配置                 -->
             <!---------------------------------------------------------------->
@@ -156,7 +157,7 @@
                 <!---------------------------------------------------------------->
                 <nav class="navbar navbar-light bg-light my-2">
                     <a class="navbar-brand">TravelGo</a>
-    
+
                     <form class="form-inline">
                         <button class="btn btn-outline-secondary rounded-pill my-2 my-sm-0 mr-md-4" type="submit">投 稿
                         </button>
@@ -178,12 +179,12 @@
                         <!-- ページネーションを挿入                                         -->
                         <!---------------------------------------------------------------->
                         <div class='nextPageLinkClass' id='nextPageLinkArea'></div>
-    
+
                     </div>
                 </div>
             </div>
         </div>
-    </div>    
+    </div>
 
 
 
@@ -201,6 +202,11 @@
         //景色データ取得
         //****************************************************************
         let keshikiData = localDataInit();
+        console.log('初回keshikiData');
+        console.log(keshikiData);
+        let keshikiData2 = firebaseDataInit();
+        console.log('初回keshikiData2');
+        console.log(keshikiData2);
 
         //****************************************************************
         //前回見ていたページをセッションストレージから取得
@@ -230,24 +236,6 @@
         //ページネーション作成
         //****************************************************************
         createPageNation(pageData, PAGEMAX);
-
-        //****************************************************************
-        //検索フォーム作成
-        //****************************************************************
-        function createSearchForm() {
-            let htmlText = '';
-            htmlText += `
-                <p>
-                    <input type="text" id="titleSearchForm" name="searchForm">
-                    <button type='button' name='searchButton'>検索</button>
-                </p>
-            `
-            $('#searchFormArea').html(htmlText);
-
-        }
-
-        createSearchForm();
-
 
         //****************************************************************
         //ページ選択クリック
@@ -309,38 +297,37 @@
         });
 
 
-        //****************************************************************
-        //firebaseからデータ読み出し
-        //****************************************************************
-
-
-
     });
 </script>
+
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script>
-    $(function() {
-      var h = $(window).height();
-      
-      $('#wrap').css('display','none');
-      $('#loader-bg ,#loader').height(h).css('display','block');
+<script>
+    //****************************************************************
+    //スプラッシュウインドウ
+    //****************************************************************
+    $(function () {
+        var h = $(window).height();
+
+        $('#wrap').css('display', 'none');
+        $('#loader-bg ,#loader').height(h).css('display', 'block');
     });
-      
+
     $(window).load(function () { //全ての読み込みが完了したら実行
-      $('#loader-bg').delay(900).fadeOut(800);
-      $('#loader').delay(600).fadeOut(300);
-      $('#wrap').css('display', 'block');
+        $('#loader-bg').delay(900).fadeOut(800);
+        $('#loader').delay(600).fadeOut(300);
+        $('#wrap').css('display', 'block');
     });
-      
+
     //10秒たったら強制的にロード画面を非表示
-    $(function(){
-      setTimeout('stopload()',10000);
+    $(function () {
+        setTimeout('stopload()', 10000);
     });
-      
-    function stopload(){
-      $('#wrap').css('display','block');
-      $('#loader-bg').delay(900).fadeOut(800);
-      $('#loader').delay(600).fadeOut(300);
+
+    function stopload() {
+        $('#wrap').css('display', 'block');
+        $('#loader-bg').delay(900).fadeOut(800);
+        $('#loader').delay(600).fadeOut(300);
     }
 </script>
 
