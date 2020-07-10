@@ -53,11 +53,20 @@
             font-size: 30px
         }
 
-        /* アプリ名 */
         a.navbar-brand {
             font-weight: bold;
-            font-family: 'Galada', cursive;
-            font-size: 30px
+            font-family: "Galada", cursive;
+            font-size: 35px;
+            color: #FC4A1A;
+            background: -webkit-linear-gradient(0deg, #FC4A1A, #F7B733);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .navbar.navbar-light.my-2 {
+            background-color: #D5E0E0;
+            padding-top: 0;
+            padding-bottom: 0;
         }
     </style>
 </head>
@@ -67,11 +76,11 @@
         <!---------------------------------------------------------------->
         <!-- タイトル 投稿ボタンエリア                                      -->
         <!---------------------------------------------------------------->
-        <nav class="navbar navbar-light bg-light my-2">
+        <nav class="navbar navbar-light my-2">
             <a class="navbar-brand">TravelGo</a>
 
             <form class="form-inline">
-                <button class="btn btn-outline-secondary rounded-pill my-2 my-sm-0 mr-md-4" type="submit">投 稿
+                <button class="btn btn-light btn-outline-secondary rounded-pill my-2 my-sm-0 mr-md-4" type="submit">投 稿
                 </button>
                 <img src="img/original.jpg" class="mr-md-4" width="30" height="30" id="icon" alt="グーグルアイコン">
                 <button class="btn btn-outline-secondary rounded-pill my-2 my-sm-0" type="submit">login
